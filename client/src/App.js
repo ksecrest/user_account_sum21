@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { Switch, Route } from 'react-router-dom';
+import Home from './components/shared/Home';
+import NoMatch from './components/shared/NoMatch';
+import Profile from './components/user/Profile';
+import Navbar from './components/shared/Navbar';
+import { Container } from 'semantic-ui-react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+
+const App = () => (
+  <>
+  <Navbar />
+  <Container>
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/home" component={Home} />
+      <Route exact path="/profile" component={Profile} />
+      <Route component={NoMatch} />
+    </Switch>
+  </Container>
+  </>
+)
 
 export default App;
