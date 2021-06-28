@@ -36,6 +36,7 @@ const updateUser = (id, user) => {
     return (
         <UserContext.Provider value={{
             ...user,
+            updateUser: updateUser
 
         }}>
             { children }

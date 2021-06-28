@@ -1,11 +1,15 @@
 import { useState } from 'react';
-import { Form } from 'semantic-ui-react';
+import { AccordionContent, Form } from 'semantic-ui-react';
+import {UserConsumer} from '../../providers/UserProvider'
 
-const AccountForm = () => {
+const AccountForm = ({updateUser}) => {
     const [user, setUser ] = useState ({ username: "", membership: "" })
     const handleSubmit = (e) => {
-        e.preventdefault()
+        e.preventDefault()
+        updateUser(1, user)
+        setUser({ username: "", membership: "" })
     }
+
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -15,11 +19,11 @@ const AccountForm = () => {
             onChange={(e) => setUser({...user, username: e.target.value })}
             required
             label="New Username" />
-            
+
             <Form.Select
             name="membership"
             value={user.membership}
-            onChange={(e) => setUser({...user, membership: e.target.value })}
+            onChange={(e, {value}) => setUser({...user, membership: value })}
             required
             label="New Membership" 
             options={membershipOpts}/>
@@ -36,4 +40,12 @@ const membershipOpts = [
     { key: "p", text: "Platinum", value: "Platinum" },
 ]
 
-export default AccountForm;
+const ConnectedAccountForm = (props) => (
+    <UserConsumer>
+        {value => (
+            <AccountForm {...props} {...value } />
+        ) }
+    </UserConsumer>
+)
+
+export default ConnectedAccountForm;
